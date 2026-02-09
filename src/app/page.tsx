@@ -1,13 +1,43 @@
 import Link from 'next/link'
 import React from 'react'
 import { Button } from '~/components/ui/button'
-    const page = () => {
+import { Dumbbell, Flower2 } from 'lucide-react' // Assuming you use lucide-react for icons
+
+const Page = () => {
   return (
-    <>
-    <div>start Exercise</div>
-    <Link href={"/pose"}><Button>sit up</Button></Link>
-    </>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-50 p-6">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold tracking-tight text-slate-900">Start Your Workout</h1>
+        <p className="text-slate-500 mt-2">Choose your preferred discipline to begin</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
+        {/* Yoga Card */}
+        <div className="flex flex-col items-center p-8 bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+            <Flower2 className="text-green-600 w-8 h-8" />
+          </div>
+          <h2 className="text-xl font-semibold mb-2">Yoga Poses</h2>
+          <p className="text-slate-500 text-center mb-6">Master your breathing and improve flexibility with various Aasans.</p>
+          <Link href="/pose" className="w-full">
+            <Button className="w-full bg-green-600 hover:bg-green-700">Go to Aasan</Button>
+          </Link>
+        </div>
+
+        {/* Exercise Card */}
+        <div className="flex flex-col items-center p-8 bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+            <Dumbbell className="text-blue-600 w-8 h-8" />
+          </div>
+          <h2 className="text-xl font-semibold mb-2">General Exercise</h2>
+          <p className="text-slate-500 text-center mb-6">Build strength and endurance with high-intensity movements.</p>
+          <Link href="/exercise" className="w-full">
+            <Button className="w-full bg-blue-600 hover:bg-blue-700">Start Exercise</Button>
+          </Link>
+        </div>
+      </div>
+    </div>
   )
 }
 
-export default page
+export default Page
