@@ -44,3 +44,14 @@ yarn-error.log*
 
 # idea files
 .idea
+
+# MediaPipe models
+/models/
+/*.task
+
+# Videos
+*.mp4
+*.webm
+
+# Large assets
+/public/
