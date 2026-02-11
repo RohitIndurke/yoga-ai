@@ -36,7 +36,7 @@ const BicepsCurl = () => {
     }
   }
   if(reps == 5 ){
-     router.push("/exercise/upperBody/RBiceps-Curl");
+     router.push("/upperBody/RBiceps-Curl");
   }
 
   return (

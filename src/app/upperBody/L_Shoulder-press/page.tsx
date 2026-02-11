@@ -7,12 +7,12 @@ import { calculateAngle } from "~/util/calAngle";
 import { useRouter } from "next/navigation";
 
 
-const ShoulderPress = () => {
+const shoulderPress = () => {
   const router = useRouter();
 
-  const R_SHOULDER = 12;
-  const R_ELBOW = 14;
-  const R_WRIST = 16;
+  const L_SHOULDER = 11;
+  const L_ELBOW = 13;
+  const L_WRIST = 15;
 
   const [reps, setReps] = useState(0);
   const stage = useRef<"up" | "down">("down");
@@ -21,28 +21,28 @@ const ShoulderPress = () => {
     if (!landmarks) return;
 
     const angle = calculateAngle(
-      landmarks[R_SHOULDER ],
-      landmarks[R_ELBOW],
-      landmarks[R_WRIST]
+      landmarks[L_SHOULDER],
+      landmarks[L_ELBOW],
+      landmarks[L_WRIST]
     );
 
-    if (angle < 60 && stage.current === "down") {
-      stage.current = "up";
+    if (angle < 90 && stage.current === "up") {
+      stage.current = "down";
     }
 
-    if (angle > 150 && stage.current === "up") {
-      stage.current = "down";
+    if (angle > 150 && stage.current === "down") {
+      stage.current = "up";
       setReps((r) => r + 1);
     }
   }
   if(reps == 5 ){
-     router.push("/exercise/upperBody/Shoulder-press");
+    // router.push("/upperBody/");
   }
 
   return (
     <>
       <h2 className="text-2xl font-bold text-slate-700">
-        Right Arm curl
+        Shoulder Press 
         Reps: {reps}
       </h2>
 
@@ -59,7 +59,7 @@ const ShoulderPress = () => {
           </h2>
 
           <video
-            src="/pics/biceps_workout.mp4"
+            src="/pics/Single_Arm_Dumbbell.mp4"
             autoPlay
             loop
             muted
@@ -79,4 +79,4 @@ const ShoulderPress = () => {
   );
 };
 
-export default ShoulderPress;
+export default shoulderPress;

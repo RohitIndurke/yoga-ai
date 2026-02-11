@@ -19,7 +19,7 @@ const Page = () => {
           </div>
           <h2 className="text-xl font-semibold mb-2">Upper Body Exercise</h2>
           <p className="text-slate-500 text-center mb-6"> push-ups (variations like diamond, wide, or knee), tricep dips, overhead presses, and bent-over rows</p>
-          <Link href="/upperBody" className="w-full">
+          <Link href="/exercise/upperBody" className="w-full">
             <Button className="w-full bg-green-600 hover:bg-green-700">Go to Upper Body Exercise</Button>
           </Link>
         </div>
@@ -31,7 +31,7 @@ const Page = () => {
           </div>
           <h2 className="text-xl font-semibold mb-2">Lower Body Exercise</h2>
           <p className="text-slate-500 text-center mb-6">Includes the pelvis, glutes, hips, thighs, knees, calves, and feet.</p>
-          <Link href="/lowerBody" className="w-full">
+          <Link href="/exercise" className="w-full">
             <Button className="w-full bg-blue-600 hover:bg-blue-700">Start Exercise</Button>
           </Link>
         </div>

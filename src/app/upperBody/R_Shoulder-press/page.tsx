@@ -7,7 +7,7 @@ import { calculateAngle } from "~/util/calAngle";
 import { useRouter } from "next/navigation";
 
 
-const BicepsCurl = () => {
+const shoulderPress = () => {
   const router = useRouter();
 
   const R_SHOULDER = 12;
@@ -26,17 +26,17 @@ const BicepsCurl = () => {
       landmarks[R_WRIST]
     );
 
-    if (angle < 60 && stage.current === "down") {
-      stage.current = "up";
+    if (angle < 90 && stage.current === "up") {
+      stage.current = "down";
     }
 
-    if (angle > 150 && stage.current === "up") {
-      stage.current = "down";
+    if (angle > 150 && stage.current === "down") {
+      stage.current = "up";
       setReps((r) => r + 1);
     }
   }
   if(reps == 5 ){
-    // router.push("/exercise/upperBody/");
+    // router.push("/upperBody/");
   }
 
   return (
@@ -59,11 +59,12 @@ const BicepsCurl = () => {
           </h2>
 
           <video
-            src="/pics/biceps_workout.mp4"
+            src="/pics/Single_Arm_Dumbbell.mp4"
             autoPlay
             loop
             muted
             className="h-full w-full object-contain"
+            style={{transform: "scaleX(-1)"}}
             />
     
           <p className="text-md text-slate-600">
@@ -79,4 +80,4 @@ const BicepsCurl = () => {
   );
 };
 
-export default BicepsCurl;
+export default shoulderPress;
