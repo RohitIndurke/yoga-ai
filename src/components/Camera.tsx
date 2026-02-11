@@ -4,11 +4,14 @@ import { useEffect, useRef } from "react";
 import {
   PoseLandmarker,
   FilesetResolver,
-  DrawingUtils
+  DrawingUtils,
 } from "@mediapipe/tasks-vision";
-import Data from "~/components/Data";
 
-export default function PosePage() {
+type CameraProps = {
+  onLandmarks?: (landmarks: any[]) => void;
+};
+
+export default function Camera({ onLandmarks }: CameraProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -26,10 +29,10 @@ export default function PosePage() {
 
     poseLandmarker = await PoseLandmarker.createFromOptions(vision, {
       baseOptions: {
-        modelAssetPath: "/models/pose_landmarker.task"
+        modelAssetPath: "/models/pose_landmarker.task",
       },
       runningMode: "VIDEO",
-      numPoses: 1
+      numPoses: 1,
     });
 
     startCamera();
@@ -62,13 +65,13 @@ export default function PosePage() {
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        if (result.landmarks) {
+        if (result.landmarks && result.landmarks.length > 0) {
           const drawingUtils = new DrawingUtils(ctx);
 
           for (const landmarks of result.landmarks) {
             drawingUtils.drawLandmarks(landmarks, {
-              color: "#00ff00",
-              radius: 4
+              color: "#0ce50cff",
+              radius: 4,
             });
 
             drawingUtils.drawConnectors(
@@ -76,6 +79,15 @@ export default function PosePage() {
               PoseLandmarker.POSE_CONNECTIONS,
               { color: "#00ff00" }
             );
+          }
+
+          
+          if (onLandmarks) {
+           const firstPose = result.landmarks?.[0];
+if (firstPose && onLandmarks) {
+  onLandmarks(firstPose);
+}
+
           }
         }
       }
@@ -93,7 +105,7 @@ export default function PosePage() {
           transform: "scaleX(-1)",
           width: "100%",
           height: "100%",
-          objectFit: "cover"
+          objectFit: "cover",
         }}
         playsInline
         muted
@@ -105,10 +117,9 @@ export default function PosePage() {
           transform: "scaleX(-1)",
           width: "100%",
           height: "100%",
-          objectFit: "contain"
+          objectFit: "contain",
         }}
       />
-
     </div>
   );
 }
