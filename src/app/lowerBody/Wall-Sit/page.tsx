@@ -1,43 +1,128 @@
-import Link from 'next/link'
-import React from 'react'
-import { Button } from '~/components/ui/button'
-import { Dumbbell, BicepsFlexed  } from 'lucide-react' // Assuming you use lucide-react for icons
+"use client";
 
-const Page = () => {
+import Link from "next/link";
+import Camera from "~/components/Camera";
+import { useEffect, useRef, useState } from "react";
+import { calculateAngle } from "~/util/calAngle";
+import { useRouter } from "next/navigation";
+
+
+const wall = () => {
+  const router = useRouter();
+
+  const L_HIP = 24;
+  const L_KNEE = 26;
+  const L_ANKLE = 28;
+
+  const [time, setTime] = useState(0);
+  const startTimeRef = useRef<number | null>(null);
+
+  function processLandmarks(landmarks: any[]) {
+    if (!landmarks) return;
+
+    const angle = calculateAngle(
+      landmarks[L_HIP],
+      landmarks[L_KNEE],
+      landmarks[L_ANKLE]
+    );
+
+    if (angle >= 75 && angle <= 100) {
+      if (!startTimeRef.current) {
+        startTimeRef.current = Date.now();
+      }
+
+      const elapsed =
+        (Date.now() - startTimeRef.current) / 1000;
+
+      setTime(elapsed);
+    } else {
+
+      startTimeRef.current = null;
+      setTime(0);
+    }
+  }
+
+
+
+  useEffect(() => {
+    if (time >= 10) {
+      console.log("Wall sit completed!");
+      router.push("/lowerBody/result");
+    }
+  }, [time]);
+
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-50 p-6">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold tracking-tight text-slate-900">Start Your Workout</h1>
-        <p className="text-slate-500 mt-2">Choose your preferred discipline to begin</p>
-      </div>
+    <div className="relative min-h-screen w-full bg-[#0f172a] overflow-hidden text-white selection:bg-purple-500/30">
+      {/* Background Gradients */}
+      <div className="pointer-events-none absolute top-[-10%] left-[-10%] h-[500px] w-[500px] rounded-full bg-purple-600/20 blur-[100px]" />
+      <div className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[500px] w-[500px] rounded-full bg-blue-600/20 blur-[100px]" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
-        {/* Yoga Card */}
-        <div className="flex flex-col items-center p-8 bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-            <BicepsFlexed  className="text-green-600 w-8 h-8" />
+      <div className="container mx-auto flex min-h-screen flex-col items-center justify-center gap-8 p-4 py-8 relative z-10 lg:flex-row lg:gap-12 lg:p-8">
+
+        {/* User Camera Section */}
+        <div className="group relative flex w-full max-w-2xl flex-col gap-4">
+          <div className="flex items-center justify-between px-1">
+            <div className="flex items-center gap-2">
+              <h2 className="text-xl font-semibold tracking-wide text-slate-200">
+                Wall Sit
+              </h2>
+            </div>
           </div>
-          <h2 className="text-xl font-semibold mb-2">Upper Body Exercise</h2>
-          <p className="text-slate-500 text-center mb-6"> push-ups (variations like diamond, wide, or knee), tricep dips, overhead presses, and bent-over rows</p>
-          <Link href="/exercise/upperBody" className="w-full">
-            <Button className="w-full bg-green-600 hover:bg-green-700">Go to Upper Body Exercise</Button>
-          </Link>
+
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 shadow-2xl backdrop-blur-sm transition-all duration-500 hover:border-purple-500/30 hover:shadow-purple-500/10">
+
+
+
+            <div className="absolute bottom-4 left-4 z-10 rounded-xl bg-black/60 px-4 py-3 backdrop-blur-md border border-white/10">
+              <div className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Time</div>
+              <div className="text-3xl font-bold text-white leading-none">  {time.toFixed(1)}s / 10s </div>
+            </div>
+
+            <div className="absolute inset-0 z-0 bg-transparent">
+              <Camera onLandmarks={processLandmarks} />
+            </div>
+
+
+            <div className="absolute -left-0.5 -top-0.5 h-16 w-16 rounded-tl-3xl border-l-[3px] border-t-[3px] border-purple-500/30"></div>
+            <div className="absolute -bottom-0.5 -right-0.5 h-16 w-16 rounded-br-3xl border-b-[3px] border-r-[3px] border-purple-500/30"></div>
+          </div>
         </div>
 
-        {/* Exercise Card */}
-        <div className="flex flex-col items-center p-8 bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-            <Dumbbell className="text-blue-600 w-8 h-8" />
+
+
+        <div className="flex w-full max-w-md flex-col gap-6">
+          <div className="flex items-center justify-between px-1">
+            <h2 className="text-xl font-semibold tracking-wide text-slate-200">
+              Reference Technique
+            </h2>
           </div>
-          <h2 className="text-xl font-semibold mb-2">Lower Body Exercise</h2>
-          <p className="text-slate-500 text-center mb-6">Includes the pelvis, glutes, hips, thighs, knees, calves, and feet.</p>
-          <Link href="/exercise" className="w-full">
-            <Button className="w-full bg-blue-600 hover:bg-blue-700">Start Exercise</Button>
+
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-800/50 p-6 shadow-2xl backdrop-blur-md">
+            <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-black/20">
+              <img
+                src="/pics/wallSit.jpg"
+                alt="Wall Sit reference"
+                className="rounded-2xl w-full h-auto"
+              />
+
+            </div>
+
+            <div className="mt-6 flex flex-col gap-2">
+              <h3 className="text-lg font-medium text-white">Target</h3>
+              <p className="text-sm leading-relaxed text-slate-400">
+                Hold the position for 10 seconds. Keep your back flat against the wall.
+              </p>
+            </div>
+          </div>
+
+          <Link href="/lowerBody/result" className="w-full text-center py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 transition-colors border border-white/5">
+            Finish Workout
           </Link>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Page
+export default wall;

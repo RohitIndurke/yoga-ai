@@ -10,9 +10,9 @@ import { useRouter } from "next/navigation";
 const Squat = () => {
   const router = useRouter();
 
-  const L_SHOULDER = 11;
-  const L_ELBOW = 13;
-  const L_WRIST = 15;
+  const L_HIP = 24;
+  const L_KNEE = 26;
+  const L_ANKLE = 28;
 
   const [reps, setReps] = useState(0);
   const stage = useRef<"up" | "down">("down");
@@ -21,24 +21,25 @@ const Squat = () => {
     if (!landmarks) return;
 
     const angle = calculateAngle(
-      landmarks[L_SHOULDER],
-      landmarks[L_ELBOW],
-      landmarks[L_WRIST]
+      landmarks[L_HIP],
+      landmarks[L_KNEE],
+      landmarks[L_ANKLE]
     );
 
     if (angle < 90 && stage.current === "up") {
       stage.current = "down";
     }
 
-    if (angle > 150 && stage.current === "down") {
+    if (angle > 160 && stage.current === "down") {
       stage.current = "up";
       setReps((r) => r + 1);
     }
   }
 
+
   useEffect(() => {
     if (reps >= 5) {
-      router.push("/upperBody/WideArm");
+      router.push("/lowerBody/wall-Sit");
     }
   }, [reps, router]);
 
@@ -55,7 +56,7 @@ const Squat = () => {
           <div className="flex items-center justify-between px-1">
             <div className="flex items-center gap-2">
               <h2 className="text-xl font-semibold tracking-wide text-slate-200">
-                Left Shoulder Press
+                Squats
               </h2>
             </div>
           </div>
@@ -103,12 +104,12 @@ const Squat = () => {
             <div className="mt-6 flex flex-col gap-2">
               <h3 className="text-lg font-medium text-white">Target</h3>
               <p className="text-sm leading-relaxed text-slate-400">
-                Do 5 repetitions for your left arm. Be careful with the weight.
+                Do 5 repetitions. Keep your back straight and lower your hips.
               </p>
             </div>
           </div>
 
-          <Link href="/pose" className="w-full text-center py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 transition-colors border border-white/5">
+          <Link href="/lowerBody/wall-Sit" className="w-full text-center py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 transition-colors border border-white/5">
             Skip to Next Pose
           </Link>
         </div>
