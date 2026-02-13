@@ -1,43 +1,87 @@
-import Link from 'next/link'
 import React from 'react'
-import { Button } from '~/components/ui/button'
-import { Dumbbell, BicepsFlexed  } from 'lucide-react' // Assuming you use lucide-react for icons
+import Link from "next/link";
+import { Button } from '~/components/ui/button';
+import { ArrowLeft, Dumbbell, Activity, BicepsFlexed } from 'lucide-react';
 
-const Page = () => {
+const UpperBody = () => {
+  const exercises = [
+    {
+      name: "Squarts",
+      href: "/lowerBody/squart",
+      icon: <BicepsFlexed className="h-6 w-6 text-blue-400" />,
+      description: "Focus on isolating the left bicep with controlled movements."
+    },
+    {
+      name: "Wall Sit Exercise",
+      href: "/lowerBody/wall-Sit",
+      icon: <BicepsFlexed className="h-6 w-6 text-blue-400" style={{ transform: 'scaleX(-1)' }} />,
+      description: "Build strength in your right arm with proper form."
+    },
+    {
+      name: "Dumbel Shoulder Press",
+      href: "/upperBody/L_Shoulder-press",
+      icon: <Dumbbell className="h-6 w-6 text-purple-400" />,
+      description: "Strengthen your left deltoid with overhead presses."
+    },
+    {
+      name: "Bar Shoulder Press",
+      href: "/upperBody/R_Shoulder-press",
+      icon: <Dumbbell className="h-6 w-6 text-purple-400" />,
+      description: "Target your right shoulder stability and power."
+    }
+  ];
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-50 p-6">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold tracking-tight text-slate-900">Start Your Workout</h1>
-        <p className="text-slate-500 mt-2">Choose your preferred discipline to begin</p>
-      </div>
+    <div className="relative min-h-screen w-full bg-[#0f172a] overflow-hidden text-white selection:bg-purple-500/30">
+      {/* Background Gradients */}
+      <div className="pointer-events-none absolute top-[-10%] left-[-10%] h-[500px] w-[500px] rounded-full bg-purple-600/20 blur-[100px]" />
+      <div className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[500px] w-[500px] rounded-full bg-blue-600/20 blur-[100px]" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
-        {/* Yoga Card */}
-        <div className="flex flex-col items-center p-8 bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-            <BicepsFlexed  className="text-green-600 w-8 h-8" />
-          </div>
-          <h2 className="text-xl font-semibold mb-2">Upper Body Exercise</h2>
-          <p className="text-slate-500 text-center mb-6"> push-ups (variations like diamond, wide, or knee), tricep dips, overhead presses, and bent-over rows</p>
-          <Link href="/exercise/upperBody" className="w-full">
-            <Button className="w-full bg-green-600 hover:bg-green-700">Go to Upper Body Exercise</Button>
-          </Link>
+      <div className="container mx-auto px-4 py-8 relative z-10">
+        <Link href="/" className="inline-flex items-center text-slate-400 hover:text-white mb-8 transition-colors">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Home
+        </Link>
+
+        <div className="mb-12 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400 mb-4">
+            Upper Body Exercises
+          </h1>
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+            Select an exercise to begin your tracking session. Our AI will count your reps and monitor your form.
+          </p>
         </div>
 
-        {/* Exercise Card */}
-        <div className="flex flex-col items-center p-8 bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-            <Dumbbell className="text-blue-600 w-8 h-8" />
-          </div>
-          <h2 className="text-xl font-semibold mb-2">Lower Body Exercise</h2>
-          <p className="text-slate-500 text-center mb-6">Includes the pelvis, glutes, hips, thighs, knees, calves, and feet.</p>
-          <Link href="/exercise" className="w-full">
-            <Button className="w-full bg-blue-600 hover:bg-blue-700">Start Exercise</Button>
-          </Link>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {exercises.map((exercise) => (
+            <Link key={exercise.href} href={exercise.href} className="group">
+              <div className="h-full rounded-2xl border border-white/10 bg-slate-900/50 p-6 backdrop-blur-sm transition-all duration-300 hover:border-purple-500/30 hover:bg-slate-800/60 hover:shadow-lg hover:shadow-purple-500/10">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="p-3 rounded-xl bg-white/5 ring-1 ring-white/10 group-hover:bg-purple-500/20 group-hover:ring-purple-500/30 transition-colors">
+                    {exercise.icon}
+                  </div>
+                  <div className="px-3 py-1 rounded-full bg-white/5 border border-white/5 text-xs font-medium text-slate-400 group-hover:text-white transition-colors">
+                    🔥
+                  </div>
+                </div>
+
+                <h3 className="text-xl font-semibold text-slate-100 mb-2 group-hover:text-purple-300 transition-colors">
+                  {exercise.name}
+                </h3>
+                <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                  {exercise.description}
+                </p>
+
+                <div className="flex items-center text-sm font-medium text-purple-400 group-hover:text-purple-300">
+                  Start Session <Activity className="ml-2 h-4 w-4" />
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </div>
   )
 }
 
-export default Page
+export default UpperBody
