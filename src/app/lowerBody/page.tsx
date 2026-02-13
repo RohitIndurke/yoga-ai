@@ -3,31 +3,19 @@ import Link from "next/link";
 import { Button } from '~/components/ui/button';
 import { ArrowLeft, Dumbbell, Activity, BicepsFlexed } from 'lucide-react';
 
-const UpperBody = () => {
+const LowerBody = () => {
   const exercises = [
     {
-      name: "Squarts",
+      name: "Squats",
       href: "/lowerBody/squart",
-      icon: <BicepsFlexed className="h-6 w-6 text-blue-400" />,
-      description: "Focus on isolating the left bicep with controlled movements."
+      icon: <Activity className="h-6 w-6 text-blue-400" />,
+      description: "Build lower body strength with proper squat form."
     },
     {
-      name: "Wall Sit Exercise",
+      name: "Wall Sit",
       href: "/lowerBody/wall-Sit",
-      icon: <BicepsFlexed className="h-6 w-6 text-blue-400" style={{ transform: 'scaleX(-1)' }} />,
-      description: "Build strength in your right arm with proper form."
-    },
-    {
-      name: "Dumbel Shoulder Press",
-      href: "/upperBody/L_Shoulder-press",
-      icon: <Dumbbell className="h-6 w-6 text-purple-400" />,
-      description: "Strengthen your left deltoid with overhead presses."
-    },
-    {
-      name: "Bar Shoulder Press",
-      href: "/upperBody/R_Shoulder-press",
-      icon: <Dumbbell className="h-6 w-6 text-purple-400" />,
-      description: "Target your right shoulder stability and power."
+      icon: <Activity className="h-6 w-6 text-blue-400" />,
+      description: "Endurance exercise for quadriceps and core."
     }
   ];
 
@@ -45,7 +33,7 @@ const UpperBody = () => {
 
         <div className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400 mb-4">
-            Upper Body Exercises
+            Lower Body Exercises
           </h1>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
             Select an exercise to begin your tracking session. Our AI will count your reps and monitor your form.
@@ -84,4 +72,4 @@ const UpperBody = () => {
   )
 }
 
-export default UpperBody
+export default LowerBody

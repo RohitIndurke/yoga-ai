@@ -6,28 +6,40 @@ import { ArrowLeft, Dumbbell, Activity, BicepsFlexed } from 'lucide-react';
 const UpperBody = () => {
   const exercises = [
     {
-      name: "Biceps Curl",
+      name: "Left Biceps Curl",
       href: "/upperBody/LBiceps-Curl",
       icon: <BicepsFlexed className="h-6 w-6 text-blue-400" />,
       description: "Focus on isolating the left bicep with controlled movements."
     },
     {
-      name: "Wide Arm Push Ups",
-      href: "/upperBody/wideArm",
+      name: "Right Biceps Curl",
+      href: "/upperBody/RBiceps-Curl",
       icon: <BicepsFlexed className="h-6 w-6 text-blue-400" style={{ transform: 'scaleX(-1)' }} />,
-      description: "Build strength in your right arm with proper form."
+      description: "Focus on isolating the right bicep with controlled movements."
     },
     {
-      name: "Dumbel Shoulder Press",
-      href: "/upperBody/L_Shoulder",
+      name: "Wide Arm Push Ups",
+      href: "/upperBody/WideArm",
+      icon: <Activity className="h-6 w-6 text-blue-400" />,
+      description: "Build chest and shoulder strength."
+    },
+    {
+      name: "Left Shoulder Press",
+      href: "/upperBody/L_Shoulder-press",
       icon: <Dumbbell className="h-6 w-6 text-purple-400" />,
       description: "Strengthen your left deltoid with overhead presses."
+    },
+    {
+      name: "Right Shoulder Press",
+      href: "/upperBody/R_Shoulder-press",
+      icon: <Dumbbell className="h-6 w-6 text-purple-400" style={{ transform: 'scaleX(-1)' }} />,
+      description: "Strengthen your right deltoid with overhead presses."
     },
     {
       name: "Bar Shoulder Press",
       href: "/upperBody/bar_Shoulder",
       icon: <Dumbbell className="h-6 w-6 text-purple-400" />,
-      description: "Target your right shoulder stability and power."
+      description: "Target your  shoulder stability and power."
     }
   ];
 

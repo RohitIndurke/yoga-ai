@@ -56,13 +56,13 @@ const shoulderPress = () => {
           <div className="flex items-center justify-between px-1">
             <div className="flex items-center gap-2">
               <h2 className="text-xl font-semibold tracking-wide text-slate-200">
-                Shoulder Press
+                Right Shoulder Press
               </h2>
             </div>
           </div>
 
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 shadow-2xl backdrop-blur-sm transition-all duration-500 hover:border-purple-500/30 hover:shadow-purple-500/10">
-            
+
 
             {/* Rep Counter Overlay in Camera */}
             <div className="absolute bottom-4 left-4 z-10 rounded-xl bg-black/60 px-4 py-3 backdrop-blur-md border border-white/10">

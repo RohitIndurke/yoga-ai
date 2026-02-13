@@ -74,48 +74,72 @@ const WideArmPushup = () => {
     }, [reps, router]);
 
     return (
-        <div className="relative min-h-screen w-full bg-[#0f172a] text-white">
-            <div className="container mx-auto flex min-h-screen flex-col items-center justify-center gap-8 p-4 lg:flex-row">
+        <div className="relative min-h-screen w-full bg-[#0f172a] overflow-hidden text-white selection:bg-purple-500/30">
+            {/* Background Gradients */}
+            <div className="pointer-events-none absolute top-[-10%] left-[-10%] h-[500px] w-[500px] rounded-full bg-purple-600/20 blur-[100px]" />
+            <div className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[500px] w-[500px] rounded-full bg-blue-600/20 blur-[100px]" />
 
+            <div className="container mx-auto flex min-h-screen flex-col items-center justify-center gap-8 p-4 py-8 relative z-10 lg:flex-row lg:gap-12 lg:p-8">
 
-                <div className="relative w-full max-w-2xl">
-                    <h2 className="mb-2 text-xl font-semibold">
-                        Wide-Arm Push-Up (Front View)
-                    </h2>
+                {/* User Camera Section */}
+                <div className="group relative flex w-full max-w-2xl flex-col gap-4">
+                    <div className="flex items-center justify-between px-1">
+                        <div className="flex items-center gap-2">
+                            <h2 className="text-xl font-semibold tracking-wide text-slate-200">
+                                Wide Arm Push Ups
+                            </h2>
+                        </div>
+                    </div>
 
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10">
-                        <div className="absolute bottom-4 left-4 z-10 rounded-xl bg-black/60 px-4 py-3">
-                            <div className="text-xs text-slate-400">REPS</div>
-                            <div className="text-3xl font-bold">{reps} / 5</div>
+                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 shadow-2xl backdrop-blur-sm transition-all duration-500 hover:border-purple-500/30 hover:shadow-purple-500/10">
+
+                        {/* Rep Counter Overlay in Camera */}
+                        <div className="absolute bottom-4 left-4 z-10 rounded-xl bg-black/60 px-4 py-3 backdrop-blur-md border border-white/10">
+                            <div className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Reps</div>
+                            <div className="text-3xl font-bold text-white leading-none">{reps} <span className="text-lg text-slate-500 font-normal">/ 5</span></div>
                         </div>
 
-                        <Camera onLandmarks={processLandmarks} />
+                        <div className="absolute inset-0 z-0 bg-transparent">
+                            <Camera onLandmarks={processLandmarks} />
+                        </div>
+
+                        {/* Corner Accents */}
+                        <div className="absolute -left-0.5 -top-0.5 h-16 w-16 rounded-tl-3xl border-l-[3px] border-t-[3px] border-purple-500/30"></div>
+                        <div className="absolute -bottom-0.5 -right-0.5 h-16 w-16 rounded-br-3xl border-b-[3px] border-r-[3px] border-purple-500/30"></div>
                     </div>
                 </div>
 
 
-                <div className="w-full max-w-md">
-                    <div className="rounded-3xl border border-white/10 bg-slate-800/50 p-6">
-                        <video
-                            src="/pics/wide-pushup.mp4"
-                            autoPlay
-                            loop
-                            muted
-                            className="rounded-xl"
-                            style={{ transform: "scaleX(-1)" }}
-                        />
-
-                        <p className="mt-4 text-sm text-slate-400">
-                            Keep hands wider than shoulders. Lower chest evenly and
-                            push back up fully.
-                        </p>
+                {/* Reference Video Section */}
+                <div className="flex w-full max-w-md flex-col gap-6">
+                    <div className="flex items-center justify-between px-1">
+                        <h2 className="text-xl font-semibold tracking-wide text-slate-200">
+                            Reference Technique
+                        </h2>
                     </div>
 
-                    <Link
-                        href="/pose"
-                        className="mt-6 block text-center rounded-xl bg-white/5 py-3"
-                    >
-                        Skip Exercise
+                    <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-800/50 p-6 shadow-2xl backdrop-blur-md">
+                        <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-black/20">
+                            <video
+                                src="/pics/wide-pushup.mp4"
+                                autoPlay
+                                loop
+                                muted
+                                className="h-full w-full object-contain"
+                                style={{ transform: "scaleX(-1)" }}
+                            />
+                        </div>
+
+                        <div className="mt-6 flex flex-col gap-2">
+                            <h3 className="text-lg font-medium text-white">Target</h3>
+                            <p className="text-sm leading-relaxed text-slate-400">
+                                Keep hands wider than shoulders. Lower chest evenly and push back up fully.
+                            </p>
+                        </div>
+                    </div>
+
+                    <Link href="/pose" className="w-full text-center py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 transition-colors border border-white/5">
+                        Skip to Next Pose
                     </Link>
                 </div>
             </div>
