@@ -6,26 +6,26 @@ import { ArrowLeft, Dumbbell, Activity, BicepsFlexed } from 'lucide-react';
 const UpperBody = () => {
   const exercises = [
     {
-      name: "Left Biceps Curl",
+      name: "Biceps Curl",
       href: "/upperBody/LBiceps-Curl",
       icon: <BicepsFlexed className="h-6 w-6 text-blue-400" />,
       description: "Focus on isolating the left bicep with controlled movements."
     },
     {
-      name: "Right Biceps Curl",
-      href: "/upperBody/RBiceps-Curl",
+      name: "Wide Arm Push Ups",
+      href: "/upperBody/wideArm",
       icon: <BicepsFlexed className="h-6 w-6 text-blue-400" style={{ transform: 'scaleX(-1)' }} />,
       description: "Build strength in your right arm with proper form."
     },
     {
-      name: "Left Shoulder Press",
-      href: "/upperBody/L_Shoulder-press",
+      name: "Dumbel Shoulder Press",
+      href: "/upperBody/L_Shoulder",
       icon: <Dumbbell className="h-6 w-6 text-purple-400" />,
       description: "Strengthen your left deltoid with overhead presses."
     },
     {
-      name: "Right Shoulder Press",
-      href: "/upperBody/R_Shoulder-press",
+      name: "Bar Shoulder Press",
+      href: "/upperBody/bar_Shoulder",
       icon: <Dumbbell className="h-6 w-6 text-purple-400" />,
       description: "Target your right shoulder stability and power."
     }
@@ -61,7 +61,7 @@ const UpperBody = () => {
                     {exercise.icon}
                   </div>
                   <div className="px-3 py-1 rounded-full bg-white/5 border border-white/5 text-xs font-medium text-slate-400 group-hover:text-white transition-colors">
-                    AI Tracking
+                    🔥
                   </div>
                 </div>
 

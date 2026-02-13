@@ -7,12 +7,12 @@ import { calculateAngle } from "~/util/calAngle";
 import { useRouter } from "next/navigation";
 
 
-const ShoulderPress = () => {
+const Squat = () => {
   const router = useRouter();
 
-  const R_SHOULDER = 12;
-  const R_ELBOW = 14;
-  const R_WRIST = 16;
+  const L_SHOULDER = 11;
+  const L_ELBOW = 13;
+  const L_WRIST = 15;
 
   const [reps, setReps] = useState(0);
   const stage = useRef<"up" | "down">("down");
@@ -21,26 +21,26 @@ const ShoulderPress = () => {
     if (!landmarks) return;
 
     const angle = calculateAngle(
-      landmarks[R_SHOULDER],
-      landmarks[R_ELBOW],
-      landmarks[R_WRIST]
+      landmarks[L_SHOULDER],
+      landmarks[L_ELBOW],
+      landmarks[L_WRIST]
     );
 
-    if (angle < 60 && stage.current === "down") {
-      stage.current = "up";
+    if (angle < 90 && stage.current === "up") {
+      stage.current = "down";
     }
 
-    if (angle > 150 && stage.current === "up") {
-      stage.current = "down";
+    if (angle > 150 && stage.current === "down") {
+      stage.current = "up";
       setReps((r) => r + 1);
     }
   }
+
   useEffect(() => {
-      if (reps >= 5) {
-        router.push("/upperBody/R_Shoulder-press");
-      }
-    }, [reps, router]);
-  
+    if (reps >= 5) {
+      router.push("/upperBody/WideArm");
+    }
+  }, [reps, router]);
 
   return (
     <div className="relative min-h-screen w-full bg-[#0f172a] overflow-hidden text-white selection:bg-purple-500/30">
@@ -55,13 +55,13 @@ const ShoulderPress = () => {
           <div className="flex items-center justify-between px-1">
             <div className="flex items-center gap-2">
               <h2 className="text-xl font-semibold tracking-wide text-slate-200">
-                Right Biceps Curl
+                Left Shoulder Press
               </h2>
             </div>
           </div>
 
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 shadow-2xl backdrop-blur-sm transition-all duration-500 hover:border-purple-500/30 hover:shadow-purple-500/10">
-            
+
 
             {/* Rep Counter Overlay in Camera */}
             <div className="absolute bottom-4 left-4 z-10 rounded-xl bg-black/60 px-4 py-3 backdrop-blur-md border border-white/10">
@@ -91,19 +91,19 @@ const ShoulderPress = () => {
           <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-800/50 p-6 shadow-2xl backdrop-blur-md">
             <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-black/20">
               <video
-                src="/pics/biceps_workout.mp4"
+                src="/pics/squart.mp4"
                 autoPlay
                 loop
                 muted
                 className="h-full w-full object-contain"
-
+                style={{ transform: "scaleX(-1)" }}
               />
             </div>
 
             <div className="mt-6 flex flex-col gap-2">
               <h3 className="text-lg font-medium text-white">Target</h3>
               <p className="text-sm leading-relaxed text-slate-400">
-                Do 5 repetitions for your right arm. Keep your elbows close to your body.
+                Do 5 repetitions for your left arm. Be careful with the weight.
               </p>
             </div>
           </div>
@@ -117,4 +117,4 @@ const ShoulderPress = () => {
   );
 };
 
-export default ShoulderPress;
+export default Squat;

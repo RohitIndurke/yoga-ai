@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Camera from "~/components/Camera";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { calculateAngle } from "~/util/calAngle";
 import { useRouter } from "next/navigation";
 
@@ -35,9 +35,13 @@ const shoulderPress = () => {
       setReps((r) => r + 1);
     }
   }
-  if (reps == 5) {
-    router.push("/upperBody/L_Shoulder-press");
-  }
+
+  useEffect(() => {
+    if (reps >= 5) {
+      router.push("/upperBody/L_Shoulder-press");
+    }
+  }, [reps, router]);
+
 
   return (
     <div className="relative min-h-screen w-full bg-[#0f172a] overflow-hidden text-white selection:bg-purple-500/30">
@@ -58,10 +62,7 @@ const shoulderPress = () => {
           </div>
 
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 shadow-2xl backdrop-blur-sm transition-all duration-500 hover:border-purple-500/30 hover:shadow-purple-500/10">
-            <div className="absolute top-4 right-4 z-10 flex items-center gap-2 rounded-full bg-black/40 px-3 py-1 text-xs font-medium text-white backdrop-blur-md border border-white/5">
-              <div className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
-              LIVE
-            </div>
+            
 
             {/* Rep Counter Overlay in Camera */}
             <div className="absolute bottom-4 left-4 z-10 rounded-xl bg-black/60 px-4 py-3 backdrop-blur-md border border-white/10">

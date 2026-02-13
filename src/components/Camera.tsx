@@ -14,15 +14,17 @@ type CameraProps = {
 export default function Camera({ onLandmarks }: CameraProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
+  const lastTimestampRef = useRef<number>(0);
   const poseLandmarkerRef = useRef<PoseLandmarker | null>(null);
   const lastVideoTimeRef = useRef<number>(-1);
   const animationFrameRef = useRef<number | null>(null);
+
 
   useEffect(() => {
     init();
 
     return () => {
+
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
@@ -31,24 +33,35 @@ export default function Camera({ onLandmarks }: CameraProps) {
         const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
         tracks.forEach((t) => t.stop());
       }
+
+      if (poseLandmarkerRef.current) {
+        poseLandmarkerRef.current.close();
+        poseLandmarkerRef.current = null;
+      }
     };
   }, []);
 
   async function init() {
-    const vision = await FilesetResolver.forVisionTasks(
-      "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
-    );
+    try {
+      const vision = await FilesetResolver.forVisionTasks(
+        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.32/wasm"
+      );
 
-    poseLandmarkerRef.current =
-      await PoseLandmarker.createFromOptions(vision, {
-        baseOptions: {
-          modelAssetPath: "/models/pose_landmarker.task",
-        },
-        runningMode: "VIDEO",
-        numPoses: 1,
-      });
+      poseLandmarkerRef.current =
+        await PoseLandmarker.createFromOptions(vision, {
+          baseOptions: {
+            modelAssetPath:
+              "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_full/float16/1/pose_landmarker_full.task",
+            delegate: "GPU",
+          },
+          runningMode: "VIDEO",
+          numPoses: 1,
+        });
 
-    startCamera();
+      startCamera();
+    } catch (error) {
+      console.error("Error initializing pose landmarker:", error);
+    }
   }
 
   async function startCamera() {
@@ -80,42 +93,60 @@ export default function Camera({ onLandmarks }: CameraProps) {
 
     function detectPose() {
       const poseLandmarker = poseLandmarkerRef.current;
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
 
-      // Strict null check for video in closure
-      if (!video || !poseLandmarker || video.readyState < 2) {
+
+
+      if (!video || !canvas || !poseLandmarker) {
+
+        return;
+      }
+
+      if (video.readyState < 2) {
         animationFrameRef.current = requestAnimationFrame(detectPose);
         return;
       }
 
-      const now = performance.now();
 
-      if (video.currentTime !== lastVideoTimeRef.current) {
-        lastVideoTimeRef.current = video.currentTime;
+      let timestamp = video.currentTime * 1000;
 
-        const result = poseLandmarker.detectForVideo(video, now);
+      if (timestamp <= lastTimestampRef.current) {
+        timestamp = lastTimestampRef.current + 1;
+      }
 
-        ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
+      lastTimestampRef.current = timestamp;
 
-        if (result.landmarks?.length) {
-          const drawingUtils = new DrawingUtils(ctx!);
+      try {
+        const result = poseLandmarker.detectForVideo(video, timestamp);
 
-          for (const landmarks of result.landmarks) {
-            drawingUtils.drawLandmarks(landmarks, {
-              color: "#00ff88",
-              radius: 4,
-            });
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
 
-            drawingUtils.drawConnectors(
-              landmarks,
-              PoseLandmarker.POSE_CONNECTIONS,
-              { color: "#00ff00", lineWidth: 2 }
-            );
-          }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-          if (onLandmarks && result.landmarks && result.landmarks.length > 0) {
-            onLandmarks(result.landmarks[0]);
-          }
+        const firstPose = result.landmarks?.[0];
+
+        if (firstPose) {
+
+          const drawingUtils = new DrawingUtils(ctx);
+
+          drawingUtils.drawLandmarks(firstPose, {
+            color: "#00ff88",
+            radius: 4,
+          });
+
+          drawingUtils.drawConnectors(
+            firstPose,
+            PoseLandmarker.POSE_CONNECTIONS,
+            { color: "#00ff00", lineWidth: 2 }
+          );
+
+          onLandmarks?.(firstPose);
         }
+      } catch (error) {
+
+        console.error("Error detecting pose:", error);
       }
 
       animationFrameRef.current = requestAnimationFrame(detectPose);
@@ -132,6 +163,7 @@ export default function Camera({ onLandmarks }: CameraProps) {
         overflow: "hidden",
       }}
     >
+
       <video
         ref={videoRef}
         playsInline
