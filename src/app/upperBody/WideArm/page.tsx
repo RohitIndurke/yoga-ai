@@ -75,7 +75,7 @@ const WideArmPushup = () => {
 
     return (
         <div className="relative min-h-screen w-full bg-black overflow-hidden text-white selection:bg-white/30">
-           
+
             <div className="container mx-auto flex min-h-screen flex-col items-center justify-center gap-8 p-4 py-8 relative z-10 lg:flex-row lg:gap-12 lg:p-8">
 
                 <div className="group relative flex w-full max-w-2xl flex-col gap-4">
