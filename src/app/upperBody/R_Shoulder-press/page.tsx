@@ -109,7 +109,7 @@ const shoulderPress = () => {
             </div>
           </div>
 
-          <Link href="/pose" className="w-full text-center py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 transition-colors border border-white/5">
+          <Link href="/upperBody/L_Shoulder-press" className="w-full text-center py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 transition-colors border border-white/5">
             Skip to Next Pose
           </Link>
         </div>
