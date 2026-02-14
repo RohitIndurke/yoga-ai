@@ -49,9 +49,5 @@ yarn-error.log*
 /models/
 /*.task
 
-# Videos
-*.mp4
-*.webm
-
 # Large assets
 /public/
