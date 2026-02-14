@@ -54,14 +54,12 @@ const wall = () => {
 
   return (
     <div className="relative min-h-screen w-full bg-[#0f172a] overflow-hidden text-white selection:bg-purple-500/30">
-      {/* Background Gradients */}
       <div className="pointer-events-none absolute top-[-10%] left-[-10%] h-[500px] w-[500px] rounded-full bg-purple-600/20 blur-[100px]" />
       <div className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[500px] w-[500px] rounded-full bg-blue-600/20 blur-[100px]" />
 
       <div className="container mx-auto flex min-h-screen flex-col items-center justify-center gap-8 p-4 py-8 relative z-10 lg:flex-row lg:gap-12 lg:p-8">
 
-        {/* User Camera Section */}
-        <div className="group relative flex w-full max-w-2xl flex-col gap-4">
+             <div className="group relative flex w-full max-w-2xl flex-col gap-4">
           <div className="flex items-center justify-between px-1">
             <div className="flex items-center gap-2">
               <h2 className="text-xl font-semibold tracking-wide text-slate-200">

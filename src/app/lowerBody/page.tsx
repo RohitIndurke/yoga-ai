@@ -20,11 +20,8 @@ const LowerBody = () => {
   ];
 
   return (
-    <div className="relative min-h-screen w-full bg-[#0f172a] overflow-hidden text-white selection:bg-purple-500/30">
-      {/* Background Gradients */}
-      <div className="pointer-events-none absolute top-[-10%] left-[-10%] h-[500px] w-[500px] rounded-full bg-purple-600/20 blur-[100px]" />
-      <div className="pointer-events-none absolute bottom-[-10%] right-[-10%] h-[500px] w-[500px] rounded-full bg-blue-600/20 blur-[100px]" />
-
+    <div className="relative min-h-screen w-full bg-[black] overflow-hidden text-white selection:bg-purple-500/30">
+    
       <div className="container mx-auto px-4 py-8 relative z-10">
         <Link href="/" className="inline-flex items-center text-slate-400 hover:text-white mb-8 transition-colors">
           <ArrowLeft className="mr-2 h-4 w-4" />
@@ -60,7 +57,7 @@ const LowerBody = () => {
                   {exercise.description}
                 </p>
 
-                <div className="flex items-center text-sm font-medium text-purple-400 group-hover:text-purple-300">
+                <div className="flex items-center text-sm font-medium text-white-400 group-hover:text-purple-300">
                   Start Session <Activity className="ml-2 h-4 w-4" />
                 </div>
               </div>

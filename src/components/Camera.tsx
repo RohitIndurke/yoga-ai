@@ -130,16 +130,16 @@ export default function Camera({ onLandmarks }: CameraProps) {
         if (firstPose) {
 
           const drawingUtils = new DrawingUtils(ctx);
-
+          console.log(firstPose);
           drawingUtils.drawLandmarks(firstPose, {
-            color: "#00ff88",
+            color: "#ffffff",
             radius: 4,
           });
 
           drawingUtils.drawConnectors(
             firstPose,
             PoseLandmarker.POSE_CONNECTIONS,
-            { color: "#00ff00", lineWidth: 2 }
+            { color: "#e5e7eb", lineWidth: 2 }
           );
 
           onLandmarks?.(firstPose);
